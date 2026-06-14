@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { AppLink, NavLink } from "@/components/NavLink";
 
 type NavChild = { label: string; href: string };
 
-type NavLink = {
+type NavItem = {
   label: string;
   href: string;
   children?: NavChild[];
 };
 
-const navLinks: NavLink[] = [
+const navLinks: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/#about" },
   { label: "Partners", href: "/#team" },
@@ -31,10 +32,15 @@ const navLinks: NavLink[] = [
       { label: "Newsletters", href: "/newsletters" },
     ],
   },
-  
   { label: "Careers", href: "/careers" },
   { label: "Contact Us", href: "/#contact" },
 ];
+
+const linkClassName =
+  "text-secondary-foreground hover:text-primary px-3 py-2 text-sm font-medium transition-colors flex items-center gap-1";
+
+const childLinkClassName =
+  "block px-4 py-2 text-sm text-secondary-foreground hover:bg-navy-light hover:text-primary transition-colors";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -43,14 +49,14 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-secondary shadow-lg">
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
-        <a href="/" className="flex items-center gap-3">
+        <AppLink href="/" className="flex items-center gap-3">
           <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-heading font-bold text-lg">
             CA
           </div>
           <span className="text-secondary-foreground font-heading font-bold text-lg hidden sm:block">
             Ashok Pandit & Co.
           </span>
-        </a>
+        </AppLink>
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
@@ -61,23 +67,25 @@ const Navbar = () => {
               onMouseEnter={() => link.children && setDropdown(link.label)}
               onMouseLeave={() => setDropdown(null)}
             >
-              <a
+              <NavLink
                 href={link.href}
-                className="text-secondary-foreground hover:text-primary px-3 py-2 text-sm font-medium transition-colors flex items-center gap-1"
+                className={linkClassName}
+                activeClassName="text-primary"
               >
                 {link.label}
                 {link.children && <ChevronDown size={14} />}
-              </a>
+              </NavLink>
               {link.children && dropdown === link.label && (
                 <div className="absolute top-full left-0 bg-secondary border border-navy-light rounded shadow-lg min-w-[180px] py-1 z-50">
                   {link.children.map((child) => (
-                    <a
+                    <NavLink
                       key={child.label}
                       href={child.href}
-                      className="block px-4 py-2 text-sm text-secondary-foreground hover:bg-navy-light hover:text-primary transition-colors"
+                      className={childLinkClassName}
+                      activeClassName="text-primary bg-navy-light"
                     >
                       {child.label}
-                    </a>
+                    </NavLink>
                   ))}
                 </div>
               )}
@@ -100,22 +108,24 @@ const Navbar = () => {
         <div className="lg:hidden bg-secondary border-t border-navy-light pb-4">
           {navLinks.map((link) => (
             <div key={link.label}>
-              <a
+              <NavLink
                 href={link.href}
                 className="block px-6 py-2 text-secondary-foreground hover:text-primary text-sm font-medium"
+                activeClassName="text-primary"
                 onClick={() => !link.children && setOpen(false)}
               >
                 {link.label}
-              </a>
+              </NavLink>
               {link.children?.map((child) => (
-                <a
+                <NavLink
                   key={child.label}
                   href={child.href}
                   className="block px-10 py-1.5 text-sm text-muted-foreground hover:text-primary"
+                  activeClassName="text-primary"
                   onClick={() => setOpen(false)}
                 >
                   {child.label}
-                </a>
+                </NavLink>
               ))}
             </div>
           ))}

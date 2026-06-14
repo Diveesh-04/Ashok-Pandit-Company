@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { AppLink } from "@/components/NavLink";
 
 const Footer = () => (
   <footer className="bg-secondary text-secondary-foreground">
@@ -35,7 +36,9 @@ const Footer = () => (
               { label: "Contact Us", href: "/#contact" },
             ].map((l) => (
               <li key={l.label}>
-                <a href={l.href} className="hover:text-primary transition-colors">{l.label}</a>
+                <AppLink href={l.href} className="hover:text-primary transition-colors">
+                  {l.label}
+                </AppLink>
               </li>
             ))}
           </ul>
@@ -52,7 +55,9 @@ const Footer = () => (
               { label: "Audit & Assurance", href: "/services/audit-assurance" },
             ].map((s) => (
               <li key={s.label}>
-                <a href={s.href} className="hover:text-primary transition-colors">{s.label}</a>
+                <AppLink href={s.href} className="hover:text-primary transition-colors">
+                  {s.label}
+                </AppLink>
               </li>
             ))}
           </ul>
