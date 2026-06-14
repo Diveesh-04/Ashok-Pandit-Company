@@ -72,7 +72,7 @@ const Footer = () => (
             </p>
             <p className="flex items-center gap-2">
               <Mail size={16} className="text-primary shrink-0" />
-              admin@ashokpanditaca.com
+              admin@ashokpanditaca.in
             </p>
           </div>
         </div>
